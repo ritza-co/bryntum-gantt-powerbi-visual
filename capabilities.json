@@ -1,79 +1,46 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
+            "displayName": "Task Name",
+            "name": "taskName",
             "kind": "Grouping"
         },
         {
-            "displayName": "Measure Data",
-            "name": "measure",
-            "kind": "Measure"
+            "displayName": "Start Date",
+            "name": "startDate",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "End Date",
+            "name": "endDate", 
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Percent Done",
+            "name": "percentDone",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Manually Scheduled",
+            "name": "manuallyScheduled",
+            "kind": "Grouping"
         }
     ],
-    "objects": {
-        "dataPoint": {
-            "properties": {
-                "defaultColor": {
-                    "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
-                    }
-                },
-                "showAllDataPoints": {
-                    "type": {
-                        "bool": true
-                    }
-                },
-                "fill": {
-                    "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
-                    }
-                },
-                "fillRule": {
-                    "type": {
-                        "fill": {}
-                    }
-                },
-                 "fontSize": {
-                    "type": {
-                        "formatting": {
-                            "fontSize": true
-                        }
-                    }
-                }
-            }
-        }
-    },
     "dataViewMappings": [
         {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
+            "table": {
+                "rows": {
                     "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
+                        { "for": { "in": "taskName" } },
+                        { "for": { "in": "startDate" } },
+                        { "for": { "in": "endDate" } },
+                        { "for": { "in": "percentDone" } },
+                        { "for": { "in": "manuallyScheduled" } }
                     ]
                 }
             }
         }
     ],
+    "objects": {},
     "privileges": []
 }
