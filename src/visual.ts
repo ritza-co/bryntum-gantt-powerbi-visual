@@ -23,20 +23,20 @@
 *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 *  THE SOFTWARE.
 */
-"use strict";
+'use strict';
 
-import powerbi from "powerbi-visuals-api";
-import { FormattingSettingsService } from "powerbi-visuals-utils-formattingmodel";
-import "./../style/visual.less";
+import powerbi from 'powerbi-visuals-api';
+import { FormattingSettingsService } from 'powerbi-visuals-utils-formattingmodel';
+import './../style/visual.less';
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
-import * as React from "react";
-import * as xlsx from "xlsx";
-import { createRoot, Root } from "react-dom/client";
-import BryntumGanttComponent from "./BryntumGanttComponent";
-import { VisualFormattingSettingsModel } from "./settings";
+import * as React from 'react';
+import * as xlsx from 'xlsx';
+import { createRoot, Root } from 'react-dom/client';
+import BryntumGanttComponent from './BryntumGanttComponent';
+import { VisualFormattingSettingsModel } from './settings';
 
 export class Visual implements IVisual {
     private target: HTMLElement;
@@ -52,11 +52,11 @@ export class Visual implements IVisual {
 
         this.target = options.element;
         this.root = createRoot(this.target);
-        
+
         const reactRoot = React.createElement(BryntumGanttComponent, {
-            updateCallback: (updateFunc: (newState: any) => void) => {
+            updateCallback : (updateFunc: (newState: any) => void) => {
                 this.updateState = updateFunc;
-            },
+            }
         });
 
         this.root.render(reactRoot);
@@ -64,41 +64,41 @@ export class Visual implements IVisual {
 
     public update(options: VisualUpdateOptions) {
         const dataView = options.dataViews[0];
-        
+
         if (dataView && dataView.table) {
             // Extract tasks data from Power BI table dataView
             const columns = dataView.table.columns;
             const rows = dataView.table.rows;
-            
+
             // Find column indices by display name
-            const taskNameIndex = columns.findIndex((col: any) => col.displayName === "Task Name");
-            const startDateIndex = columns.findIndex((col: any) => col.displayName === "Start Date");
-            const endDateIndex = columns.findIndex((col: any) => col.displayName === "End Date");
-            const percentDoneIndex = columns.findIndex((col: any) => col.displayName === "Percent Done");
-            const manuallyScheduledIndex = columns.findIndex((col: any) => col.displayName === "Manually Scheduled");
-            
+            const taskNameIndex = columns.findIndex((col: any) => col.displayName === 'Task Name');
+            const startDateIndex = columns.findIndex((col: any) => col.displayName === 'Start Date');
+            const endDateIndex = columns.findIndex((col: any) => col.displayName === 'End Date');
+            const percentDoneIndex = columns.findIndex((col: any) => col.displayName === 'Percent Done');
+            const manuallyScheduledIndex = columns.findIndex((col: any) => col.displayName === 'Manually Scheduled');
+
             if (rows && rows.length > 0) {
                 const tasks = rows
                     .filter((row: any) => {
                         const taskName = taskNameIndex >= 0 ? row[taskNameIndex] : null;
-                        return taskName && 
-                                taskName !== null && 
-                                taskName !== undefined && 
-                                typeof taskName === 'string' && 
+                        return taskName &&
+                                taskName !== null &&
+                                taskName !== undefined &&
+                                typeof taskName === 'string' &&
                                 taskName.trim() !== '';
                     })
                     .map((row: any, index: number) => {
                         const task = {
-                            id: index + 1,
-                            name: taskNameIndex >= 0 ? row[taskNameIndex] : `Task ${index + 1}`,
-                            startDate: startDateIndex >= 0 ? this.convertExcelDate(row[startDateIndex]) : new Date().toISOString().split('T')[0],
-                            endDate: endDateIndex >= 0 ? this.convertExcelDate(row[endDateIndex]) : new Date().toISOString().split('T')[0],
-                            percentDone: percentDoneIndex >= 0 ? row[percentDoneIndex] : 0,
-                            manuallyScheduled: manuallyScheduledIndex >= 0 ? Boolean(row[manuallyScheduledIndex]) : true,
+                            id                : index + 1,
+                            name              : taskNameIndex >= 0 ? row[taskNameIndex] : `Task ${index + 1}`,
+                            startDate         : startDateIndex >= 0 ? this.convertExcelDate(row[startDateIndex]) : new Date().toISOString().split('T')[0],
+                            endDate           : endDateIndex >= 0 ? this.convertExcelDate(row[endDateIndex]) : new Date().toISOString().split('T')[0],
+                            percentDone       : percentDoneIndex >= 0 ? row[percentDoneIndex] : 0,
+                            manuallyScheduled : manuallyScheduledIndex >= 0 ? Boolean(row[manuallyScheduledIndex]) : true
                         };
                         return task;
                     });
-    
+
                 this.updateState({ tasks });
             }
         }
@@ -127,7 +127,7 @@ export class Visual implements IVisual {
 
     /**
      * Returns properties pane formatting model content hierarchies, properties and latest formatting values, Then populate properties pane.
-     * This method is called once every time we open properties pane or when the user edit any format property. 
+     * This method is called once every time we open properties pane or when the user edit any format property.
      */
     public getFormattingModel(): powerbi.visuals.FormattingModel {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
