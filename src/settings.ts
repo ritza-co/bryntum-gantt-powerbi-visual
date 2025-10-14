@@ -39,7 +39,7 @@ class DataPointCardSettings extends FormattingSettingsCard {
     defaultColor = new formattingSettings.ColorPicker({
         name        : 'defaultColor',
         displayName : 'Default color',
-        value       : { value: '' }
+        value       : { value : '' }
     });
 
     showAllDataPoints = new formattingSettings.ToggleSwitch({
@@ -51,13 +51,13 @@ class DataPointCardSettings extends FormattingSettingsCard {
     fill = new formattingSettings.ColorPicker({
         name        : 'fill',
         displayName : 'Fill',
-        value       : { value: '' }
+        value       : { value : '' }
     });
 
     fillRule = new formattingSettings.ColorPicker({
         name        : 'fillRule',
         displayName : 'Color saturation',
-        value       : { value: '' }
+        value       : { value : '' }
     });
 
     fontSize = new formattingSettings.NumUpDown({

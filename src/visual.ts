@@ -52,11 +52,11 @@ export class Visual implements IVisual {
 
         this.target = options.element;
         this.root = createRoot(this.target);
-        
+
         const reactRoot = React.createElement(BryntumGanttComponent, {
             updateCallback : (updateFunc: (newState: any) => void) => {
                 this.updateState = updateFunc;
-            },
+            }
         });
 
         this.root.render(reactRoot);
@@ -97,15 +97,15 @@ export class Visual implements IVisual {
                                 typeof taskName === 'string' &&
                                 taskName.trim() !== '';
                     })
-                    .map((row: any) => {
+                    .map((row: any, index: number) => {
                         const task = {
-                            id                : idIndex >= 0 ? row[idIndex] : undefined,
-                            name              : taskNameIndex >= 0 ? row[taskNameIndex] : undefined,
-                            startDate: startDateIndex >= 0 ? this.convertExcelDate(row[startDateIndex]) : undefined,
-                            endDate           : endDateIndex >= 0 ? this.convertExcelDate(row[endDateIndex])   : undefined,
+                            id                : idIndex >= 0 ? row[idIndex] : index + 1,
+                            name              : taskNameIndex >= 0 ? row[taskNameIndex] : `Task ${index + 1}`,
+                            startDate         : startDateIndex >= 0 ? this.convertExcelDate(row[startDateIndex]) : new Date().toISOString().split('T')[0],
+                            endDate           : endDateIndex >= 0 ? this.convertExcelDate(row[endDateIndex]) : new Date().toISOString().split('T')[0],
                             percentDone       : percentDoneIndex >= 0 ? row[percentDoneIndex] : 0,
-                            manuallyScheduled : manuallyScheduledIndex >= 0 ? Boolean(row[manuallyScheduledIndex]) : undefined,
-                            parentIndex       : parentIndexIndex >= 0 ? row[parentIndexIndex] : undefined,
+                            manuallyScheduled : manuallyScheduledIndex >= 0 ? Boolean(row[manuallyScheduledIndex]) : true,
+                            parentIndex       : parentIndexIndex >= 0 ? row[parentIndexIndex] : undefined
                         };
                         return task;
                     });
