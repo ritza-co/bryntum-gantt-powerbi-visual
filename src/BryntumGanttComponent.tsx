@@ -19,10 +19,10 @@ const BryntumGanttComponent = ({ updateCallback }) => {
     const GanttComponent = BryntumGantt as any;
     
     return (
-        <GanttComponent 
-            ref={gantt} 
+        <GanttComponent
+            ref={gantt}
             tasks={state.tasks}
-            {...ganttConfig} 
+            {...ganttConfig}
         />
     );
 };

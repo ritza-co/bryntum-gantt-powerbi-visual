@@ -1,6 +1,11 @@
 {
     "dataRoles": [
         {
+            "displayName": "ID",
+            "name": "id",
+            "kind": "Grouping"
+        },
+        {
             "displayName": "Task Name",
             "name": "taskName",
             "kind": "Grouping"
@@ -24,6 +29,11 @@
             "displayName": "Manually Scheduled",
             "name": "manuallyScheduled",
             "kind": "Grouping"
+        },
+        {
+            "displayName": "Parent Index",
+            "name": "parentIndex",
+            "kind": "Grouping"
         }
     ],
     "dataViewMappings": [
@@ -31,11 +41,13 @@
             "table": {
                 "rows": {
                     "select": [
+                        { "for": { "in": "id" } },
                         { "for": { "in": "taskName" } },
                         { "for": { "in": "startDate" } },
                         { "for": { "in": "endDate" } },
                         { "for": { "in": "percentDone" } },
-                        { "for": { "in": "manuallyScheduled" } }
+                        { "for": { "in": "manuallyScheduled" } },
+                        { "for": { "in": "parentIndex" } }
                     ]
                 }
             }
